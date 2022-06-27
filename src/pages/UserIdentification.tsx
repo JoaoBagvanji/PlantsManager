@@ -1,9 +1,12 @@
 import React, { useState } from "react";
-import { SafeAreaView, StyleSheet, View, Text, TextInput, KeyboardAvoidingView, Platform, TouchableWithoutFeedback, Keyboard} from 'react-native';
+import { SafeAreaView, StyleSheet, View, Text, 
+    TextInput, KeyboardAvoidingView, Platform, 
+    TouchableWithoutFeedback, Keyboard, Alert} from 'react-native';
 import { Button } from "../components/Button";
 import colors from "../styles/colors";
 import fonts from "../styles/fonts";
 import { useNavigation } from "@react-navigation/native";
+import  AsyncStorage from '@react-native-async-storage/async-storage';
 
 
 export function UserIdentification(){
@@ -39,7 +42,11 @@ export function UserIdentification(){
 
 
 
-    function handleSubmit(){
+    async function handleSubmit(){
+        if(!name)
+            return Alert.alert('Me diz como chamar você 🥺')
+
+        await AsyncStorage.setItem('@plantmager:user', name);
        navigate('Confirmation');
     }
 
