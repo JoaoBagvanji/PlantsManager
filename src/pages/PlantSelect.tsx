@@ -7,7 +7,8 @@ import { EnviromentButton } from "../components/EnviromentButton";
 import api from "../services/api";
 import { PlantCardPrimary } from '../components/PlantCardPrimary';
 import {Load} from '../components/Load';
-import { NavigationContainer, useNavigation } from '@react-navigation/native';
+import { useNavigation } from '@react-navigation/native';
+import { PlantProps } from '../libs/storage';
 
 
 interface EnviromentProps{
@@ -15,18 +16,6 @@ interface EnviromentProps{
     title: string;
 }
 
-interface PlantProps{
-   id: string;
-   name:string;
-   about:string;
-   water_tips:string;
-   photo:string;
-   environments: [string];
-   frequency: {
-        times: number;
-        repeat_every:string;
-    }
-}
 export function PlantSelect(){
 
     const [enviroments, setEnviroments] = useState<EnviromentProps[]>([]);
