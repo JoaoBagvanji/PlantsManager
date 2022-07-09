@@ -11,7 +11,7 @@ import { Header } from "../components/Header";
 import colors from "../styles/colors";
 import waterdrop from '../assets/waterdrop.png';
 import { useState } from "react";
-import { PlantProps, LoadPlant } from "../libs/storage";
+import { PlantProps, LoadPlant, removePlant } from "../libs/storage";
 import { useEffect } from "react";
 import { formatDistance } from "date-fns";
 import { pt } from "date-fns/locale";
@@ -28,7 +28,26 @@ export function MyPlants(){
     const[nextWaterd, setNextWaterd] = useState<string>();
 
     function handleRemove(plant: PlantProps){
-        Alert.alert('Remover', `Deseja remover a ${plant.name}`)
+        Alert.alert('Remover', `Deseja remover a ${plant.name}?`,[
+            {
+                text: 'Não 🙏🏽',
+                style: 'cancel'
+            },
+            {
+                text: 'Sim 😭',
+                onPress: async () =>{
+                    try {
+
+                        await removePlant(plant.id);
+                        setMyPlants((oldData) =>
+                            oldData.filter((item)=> item.id != plant.id) 
+                        );
+                    } catch (error) {
+                        Alert.alert('Não foi possível remover! 😪');
+                    }
+                }
+            }
+        ])
     }
     
 
@@ -82,7 +101,7 @@ export function MyPlants(){
 
                 <FlatList 
                     data ={myPlants}
-                    keyExtractor={(item) => String(item.id)}
+                    keyExtractor={(item,index) => String(index)}
                     renderItem={({ item }) =>(
                         <PlantCardSecondary 
                             data={item}

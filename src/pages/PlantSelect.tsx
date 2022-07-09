@@ -45,7 +45,7 @@ export function PlantSelect(){
 
     async function fetchPlants(){
         const { data } = await api
-        .get('plants?_sort=name&_order=asc&_page=${page}&_limit=8');
+        .get('plants?_sort=name&_order=asc&_page=${page}&_limit=10');
 
         if(!data)
             return setLoading(true);
@@ -116,7 +116,7 @@ export function PlantSelect(){
             <View>
                 <FlatList 
                 data={enviroments}
-                keyExtractor={(item) => String(item.key)}
+                keyExtractor={(item,index) => String(index)}
                 renderItem={({ item }) =>(
                     <EnviromentButton 
                     title={item.title} 
@@ -132,7 +132,7 @@ export function PlantSelect(){
             <View style={styles.plants}>
                 <FlatList
                 data={filteredPlants}
-                keyExtractor={(item) => String(item.id)}
+                keyExtractor={(item,index) => String(index)}
                 renderItem={({item}) =>(
                     <PlantCardPrimary 
                         data={item}
